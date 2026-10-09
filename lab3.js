@@ -37,9 +37,11 @@ const analyticsData = [
    * @returns {string} "Good" or "Low"
    */
   const getEngagementLevel = (user) => {
-    // TODO: use if/else or ternary operator
-    // Hint: Check if user.avgSessionDuration >= 200
-    return ""; // Replace with your implementation
+    if (user.avgSessionDuration >= 200) {
+      return "Good";
+    } else {
+      return "Low";
+    }
   };
   
   /**
@@ -49,9 +51,15 @@ const analyticsData = [
    * @returns {string} Name of user with longest session
    */
   const findLongestSessionUser = (data) => {
-    // TODO: use for loop
-    // Hint: Keep track of max duration and corresponding user name
-    return ""; // Replace with your implementation
+    let longestUser = data[0];
+
+    for (let i = 1; i < data.length; i++) {
+      if (data[i].avgSessionDuration > longestUser.avgSessionDuration) {
+        longestUser = data[i];
+      }
+    }
+
+    return longestUser.name;
   };
 
 
@@ -63,10 +71,9 @@ const analyticsData = [
    * @returns {Array} Array of formatted strings like "Alice: 3 sessions"
    */
   const formatSessions = (data) => {
-    // TODO: use map
-    // Hint: Use template literal `${user.name}: ${user.totalSessions} sessions`
-    return []; // Replace with your implementation
-    
+    return data.map((user) => {
+      return `${user.name}: ${user.totalSessions} sessions`;
+    });
   };
   
   /**
@@ -76,9 +83,13 @@ const analyticsData = [
    * @returns {Array} Array of active user names
    */
   const getActiveUsers = (data) => {
-    // TODO: use filter + map
-    // Hint: First filter users with totalSessions >= 5, then map to get names
-    return []; // Replace with your implementation
+    const activeUsers = data.filter((user) => {
+      return user.totalSessions >= 5;
+    });
+
+    return activeUsers.map((user) => {
+      return user.name;
+    });
   };
   
   /**
@@ -88,9 +99,9 @@ const analyticsData = [
    * @returns {number} Sum of all totalSessions
    */
   const getTotalSessions = (data) => {
-    // TODO: use reduce
-    // Hint: Accumulate user.totalSessions
-    return 0; // Replace with your implementation
+    return data.reduce((total, user) => {
+      return total + user.totalSessions;
+    }, 0);
   };
   
   // ========================================
@@ -143,4 +154,3 @@ const analyticsData = [
   const reset = () => {
     clearOutput();
   };
-  
